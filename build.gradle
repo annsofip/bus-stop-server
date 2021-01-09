@@ -11,6 +11,7 @@ group = 'com.github.annsofip'
 version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
+
 buildscript {
     ext {
         lombokVersion = '1.18.4'
@@ -31,4 +32,8 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     implementation('org.codehaus.groovy:groovy:2.5.3')
+}
+
+task stage {
+    dependsOn build
 }
