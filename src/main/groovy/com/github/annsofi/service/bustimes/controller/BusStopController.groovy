@@ -24,7 +24,8 @@ class BusStopController {
 
     final Logger log = LoggerFactory.getLogger(BusStopController.class)
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = ["http://localhost:3000",
+            "https://guarded-lowlands-59429.herokuapp.com"])
     @RequestMapping(value = "/topstops")
     @ResponseBody
     ResponseEntity<BusStopResponse> test() {
