@@ -4,6 +4,9 @@ class Stop {
     String stopId
     String stopName
     String directionCode
+    String stopAreaNumber
+    String zoneShortName
+
 
     Stop() {
     }
