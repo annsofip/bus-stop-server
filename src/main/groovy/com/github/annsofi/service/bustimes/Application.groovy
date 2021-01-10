@@ -10,7 +10,6 @@ import org.springframework.web.client.RestTemplate
 @SpringBootApplication
 class Application {
 
-
     static void main(String[] args) {
 
         SpringApplication.run(Application, args)

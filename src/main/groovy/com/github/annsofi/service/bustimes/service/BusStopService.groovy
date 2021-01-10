@@ -1,14 +1,14 @@
 package com.github.annsofi.service.bustimes.service
 
 import com.github.annsofi.service.bustimes.api.BusLine
-import com.github.annsofi.service.bustimes.api.IntegrationException
 import com.github.annsofi.service.bustimes.api.Stop
+import com.github.annsofi.service.bustimes.integration.JourneyIntegration
+import com.github.annsofi.service.bustimes.integration.StopIntegration
 import com.github.annsofi.service.bustimes.integration.journeypatternpointonline.JourneyResponse
 import com.github.annsofi.service.bustimes.integration.journeypatternpointonline.JourneyResult
 import com.github.annsofi.service.bustimes.integration.stop.StopResponse
 import com.github.annsofi.service.bustimes.integration.stop.StopResult
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 
@@ -18,41 +18,43 @@ class BusStopService {
     @Autowired
     RestTemplate restTemplate
 
-    @Value('${service.journeyPatternPointOnLineEndpoint}')
-    String journeyEndpoint
+    @Autowired
+    JourneyIntegration journeyIntegration
 
-    @Value('${service.busStopEndpoint}')
-    String busStopEndpoint
+    @Autowired
+    StopIntegration stopIntegration
 
-    @Value('${se.sl.api.apiKey}')
-    String apiKey
-
-    List<BusLine> getBusLineWithMaxStops(int numberOfLines) {
-        StopResponse stop = (StopResponse) restTemplate.getForObject("${busStopEndpoint}&key=${apiKey}", StopResponse.class)
-        JourneyResponse journeyPatternPointOnLine = (JourneyResponse) restTemplate.getForObject("${journeyEndpoint}&key=${apiKey}", JourneyResponse.class)
-
-        if (stop == null || journeyPatternPointOnLine == null || stop.responseData == null || journeyPatternPointOnLine.responseData == null) {
-            throw new IntegrationException()
-        }
+    List<BusLine> getBusLineWithMaxStops(int lineCount) {
+        StopResponse stop = stopIntegration.get()
+        JourneyResponse journeyPatternPointOnLine = journeyIntegration.get()
 
         Map<String, StopResult> stopPointNumberToStopResult = stop.responseData.results.collectEntries {
             [it.stopPointNumber, it]
         }
 
-        translateBusLines(getTopBusLines(journeyPatternPointOnLine.responseData.results, numberOfLines), stopPointNumberToStopResult)
+        return translateBusLines(getTopBusLines(journeyPatternPointOnLine.responseData.results, lineCount), stopPointNumberToStopResult)
     }
 
     private static List<BusLine> translateBusLines(List<Map.Entry<String, List<JourneyResult>>> topResults, Map<String, StopResult> stopPointNumberToStopResult) {
         topResults.collect({ Map.Entry<String, List<JourneyResult>> busLine ->
             List<Stop> stops = busLine.value.collect { JourneyResult jr ->
                 StopResult stopResult = stopPointNumberToStopResult.get(jr.journeyPatternPointNumber)
-                new Stop([
-                        "stopId"        : jr.journeyPatternPointNumber,
-                        "directionCode" : jr.directionCode,
-                        "stopAreaNumber": stopResult.stopAreaNumber,
-                        "zoneShortName" : stopResult.zoneShortName,
-                        "stopName"      : stopResult.stopPointName
-                ])
+                if (stopResult == null) {
+                    // This should not happen, I think but API doc is confusing so not sure
+                    return new Stop([
+                            "stopId"       : jr.journeyPatternPointNumber,
+                            "directionCode": jr.directionCode
+                    ])
+                } else {
+                    return new Stop([
+                            "stopId"        : jr.journeyPatternPointNumber,
+                            "directionCode" : jr.directionCode,
+                            "stopAreaNumber": stopResult.stopAreaNumber,
+                            "zoneShortName" : stopResult.zoneShortName,
+                            "stopName"      : stopResult.stopPointName
+                    ])
+                }
+
             }
 
             new BusLine([

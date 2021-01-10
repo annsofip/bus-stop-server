@@ -12,6 +12,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 
@@ -28,12 +29,12 @@ class BusStopController {
             "https://guarded-lowlands-59429.herokuapp.com"])
     @RequestMapping(value = "/topstops")
     @ResponseBody
-    ResponseEntity<BusStopResponse> test() {
+    ResponseEntity<BusStopResponse> topStops(@RequestParam int lineCount) {
         HttpHeaders headers = new HttpHeaders()
         headers.setAccept([MediaType.APPLICATION_JSON])
         log.info('Call to topStops endpoint')
-        List<BusLine> busLines = busStopService.getBusLineWithMaxStops(10)
-        return new ResponseEntity<>(new BusStopResponse([busLines: busLines]), headers, HttpStatus.OK)
+        List<BusLine> busLines = busStopService.getBusLineWithMaxStops(lineCount)
+        return new ResponseEntity<BusStopResponse>(new BusStopResponse([busLines: busLines]), headers, HttpStatus.OK)
     }
 
 }

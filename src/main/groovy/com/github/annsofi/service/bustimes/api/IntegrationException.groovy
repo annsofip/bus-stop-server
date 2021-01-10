@@ -1,22 +1,20 @@
 package com.github.annsofi.service.bustimes.api
 
-class IntegrationException extends RuntimeException{
+class IntegrationException extends RuntimeException {
+    int errorCode
+
     IntegrationException() {
     }
 
-    IntegrationException(String var1) {
-        super(var1)
+    IntegrationException(int errorCode) {
+        super()
+        this.errorCode = errorCode
     }
 
-    IntegrationException(String var1, Throwable var2) {
-        super(var1, var2)
-    }
-
-    IntegrationException(Throwable var1) {
-        super(var1)
-    }
-
-    IntegrationException(String var1, Throwable var2, boolean var3, boolean var4) {
-        super(var1, var2, var3, var4)
+    @Override
+    String toString() {
+        return "IntegrationException{" +
+                "errorCode=" + errorCode +
+                '}'
     }
 }

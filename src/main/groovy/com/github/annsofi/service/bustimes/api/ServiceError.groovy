@@ -1,13 +1,12 @@
 package com.github.annsofi.service.bustimes.api
 
 import com.fasterxml.jackson.annotation.JsonFormat
-import org.springframework.http.HttpStatus
 
 import java.time.LocalDateTime
 
 class ServiceError {
 
-    private HttpStatus status
+    private  List<String> errors
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp
     private String message
@@ -17,21 +16,21 @@ class ServiceError {
         timestamp = LocalDateTime.now()
     }
 
-    ServiceError(HttpStatus status) {
+    ServiceError(List<String> errors) {
         this()
-        this.status = status
+        this.errors = errors
     }
 
-    ServiceError(HttpStatus status, Throwable ex) {
+    ServiceError(List<String> errors, Throwable ex) {
         this()
-        this.status = status
+        this.errors = errors
         this.message = "Unexpected error"
         this.debugMessage = ex.getLocalizedMessage()
     }
 
-    ServiceError(HttpStatus status, String message, Throwable ex) {
+    ServiceError(List<String> errors, String message, Throwable ex) {
         this()
-        this.status = status
+        this.errors = errors
         this.message = message
         this.debugMessage = ex.getLocalizedMessage()
     }
