@@ -34,6 +34,7 @@ class BusStopController {
         headers.setAccept([MediaType.APPLICATION_JSON])
         log.info('Call to topStops endpoint')
         List<BusLine> busLines = busStopService.getBusLineWithMaxStops(lineCount)
+        log.info(busLines.toString())
         return new ResponseEntity<BusStopResponse>(new BusStopResponse([busLines: busLines]), headers, HttpStatus.OK)
     }
 

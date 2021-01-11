@@ -19,6 +19,6 @@ class JourneyResponse {
                 "statusCode=" + statusCode +
                 ", executionTime=" + executionTime +
                 ", responseData=" + responseData +
-                '}';
+                '}'
     }
 }

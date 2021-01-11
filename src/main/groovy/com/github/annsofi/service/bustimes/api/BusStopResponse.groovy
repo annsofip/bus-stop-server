@@ -5,4 +5,12 @@ class BusStopResponse {
 
     BusStopResponse() {
     }
+
+
+    @Override
+    String toString() {
+        return "BusStopResponse{" +
+                "busLines=" + busLines +
+                '}'
+    }
 }

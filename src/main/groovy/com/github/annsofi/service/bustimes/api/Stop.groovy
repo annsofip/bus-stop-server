@@ -10,4 +10,15 @@ class Stop {
 
     Stop() {
     }
+
+    @Override
+    String toString() {
+        return "Stop{" +
+                "stopId='" + stopId + '\'' +
+                ", stopName='" + stopName + '\'' +
+                ", directionCode='" + directionCode + '\'' +
+                ", stopAreaNumber='" + stopAreaNumber + '\'' +
+                ", zoneShortName='" + zoneShortName + '\'' +
+                '}'
+    }
 }

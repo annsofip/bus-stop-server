@@ -7,4 +7,13 @@ class BusLine {
 
     BusLine() {
     }
+
+    @Override
+    String toString() {
+        return "BusLine{" +
+                "lineNumber='" + lineNumber + '\'' +
+                ", stops=" + stops +
+                ", numberOfStops=" + numberOfStops +
+                '}'
+    }
 }

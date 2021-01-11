@@ -15,10 +15,9 @@ class GlobalExceptionHandler {
         HttpHeaders headers = new HttpHeaders()
 
         if (ex instanceof IntegrationException) {
-            HttpStatus status = HttpStatus.NOT_FOUND
-            IntegrationException unfe = (IntegrationException) ex
-            List<String> errors = Collections.singletonList(unfe.getMessage())
-            return handleExceptionInternal(new ServiceError(errors), headers, status)
+            HttpStatus status = HttpStatus.BAD_GATEWAY
+            IntegrationException integrationException = (IntegrationException) ex
+            return handleExceptionInternal(new ServiceError(integrationException.errorCode.toString()), headers, status)
         } else {
             HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR
             return handleExceptionInternal(null, headers, status)
@@ -26,7 +25,6 @@ class GlobalExceptionHandler {
     }
 
     static ResponseEntity<ServiceError> handleExceptionInternal(ServiceError body, HttpHeaders headers, HttpStatus status) {
-
         return new ResponseEntity<ServiceError>(body, headers, status)
     }
 }

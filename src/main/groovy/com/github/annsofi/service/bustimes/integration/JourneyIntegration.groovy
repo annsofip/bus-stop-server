@@ -6,6 +6,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 
@@ -24,6 +25,7 @@ class JourneyIntegration {
 
     final Logger log = LoggerFactory.getLogger(JourneyIntegration.class)
 
+    @Cacheable(value="journeyResponse")
     JourneyResponse get() {
         log.debug("Calling ${integrationEndpoint}")
         JourneyResponse response = (JourneyResponse) restTemplate.getForObject("${integrationEndpoint}&key=${apiKey}", JourneyResponse.class)
