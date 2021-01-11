@@ -18,15 +18,15 @@ class GlobalExceptionHandler {
             HttpStatus status = HttpStatus.NOT_FOUND
             IntegrationException unfe = (IntegrationException) ex
             List<String> errors = Collections.singletonList(unfe.getMessage())
-            return handleExceptionInternal(ex, new ServiceError(errors), headers, status, request)
+            return handleExceptionInternal(new ServiceError(errors), headers, status)
         } else {
             HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR
-            return handleExceptionInternal(ex, null, headers, status, request)
+            return handleExceptionInternal(null, headers, status)
         }
     }
 
-    ResponseEntity<ServiceError> handleExceptionInternal(Exception ex, ServiceError body, HttpHeaders headers, HttpStatus status) {
+    static ResponseEntity<ServiceError> handleExceptionInternal(ServiceError body, HttpHeaders headers, HttpStatus status) {
 
-        return new ResponseEntity<>(body, headers, status)
+        return new ResponseEntity<ServiceError>(body, headers, status)
     }
 }
