@@ -15,6 +15,7 @@ sourceCompatibility = 1.8
 buildscript {
     ext {
         springBootVersion = '2.4.0'
+        groovyVersion = '2.4.5'
     }
     repositories {
         mavenCentral()
@@ -30,12 +31,12 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
-    implementation('org.codehaus.groovy:groovy:3.0.5')
+    implementation("org.codehaus.groovy:groovy:${groovyVersion}")
     implementation('io.springfox:springfox-swagger2:2.9.2')
     implementation('io.springfox:springfox-swagger-ui:2.9.2')
 
     testCompile(
-            'org.codehaus.groovy:groovy-all:2.4.4',
+            "org.codehaus.groovy:groovy-all:${groovyVersion}",
             'org.springframework.boot:spring-boot-starter-test',
             'org.springframework.boot:spring-boot-starter-web',
             'org.spockframework:spock-core:1.1-groovy-2.4',
