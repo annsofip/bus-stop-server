@@ -14,7 +14,6 @@ sourceCompatibility = 1.8
 
 buildscript {
     ext {
-        lombokVersion = '1.18.4'
         springBootVersion = '2.4.0'
     }
     repositories {
@@ -31,11 +30,14 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
-    implementation('org.codehaus.groovy:groovy:2.5.3')
+    implementation('org.codehaus.groovy:groovy:3.0.5')
+    implementation('io.springfox:springfox-swagger2:2.9.2')
+    implementation('io.springfox:springfox-swagger-ui:2.9.2')
 
     testCompile(
             'org.codehaus.groovy:groovy-all:2.4.4',
             'org.springframework.boot:spring-boot-starter-test',
+            'org.springframework.boot:spring-boot-starter-web',
             'org.spockframework:spock-core:1.1-groovy-2.4',
             'org.spockframework:spock-spring:1.1-groovy-2.4',
             'cglib:cglib-nodep:2.2'
