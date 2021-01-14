@@ -1,6 +1,7 @@
 package com.github.annsofi.service.busstops.service
 
 import com.github.annsofi.service.busstops.api.BusLine
+import com.github.annsofi.service.busstops.api.BusStopResponse
 import com.github.annsofi.service.busstops.api.Stop
 import com.github.annsofi.service.busstops.integration.JourneyIntegration
 import com.github.annsofi.service.busstops.integration.StopIntegration
@@ -24,7 +25,7 @@ class BusStopService {
     @Autowired
     StopIntegration stopIntegration
 
-    List<BusLine> getBusLineWithMaxStops(int lineCount) {
+    BusStopResponse getBusLineWithMaxStops(int lineCount) {
         StopResponse stop = stopIntegration.get()
         JourneyResponse journeyPatternPointOnLine = journeyIntegration.get()
 
@@ -32,7 +33,8 @@ class BusStopService {
             [it.stopPointNumber, it]
         }
 
-        return translateBusLines(getTopBusLines(journeyPatternPointOnLine.responseData.results, lineCount), stopPointNumberToStopResult)
+        List<BusLine> busLines = translateBusLines(getTopBusLines(journeyPatternPointOnLine.responseData.results, lineCount), stopPointNumberToStopResult)
+        return new BusStopResponse([busLines: busLines])
     }
 
     static List<BusLine> translateBusLines(Map<String, List<JourneyResult>> busLines, Map<String, StopResult> stopPointNumberToStopResult) {

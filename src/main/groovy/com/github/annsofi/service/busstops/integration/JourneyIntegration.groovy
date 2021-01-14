@@ -17,8 +17,8 @@ class JourneyIntegration {
     @Value('${service.journeyPatternPointOnLineEndpoint}')
     String integrationEndpoint
 
-    @Value('${se.sl.api.apiKey}')
-    String apiKey
+
+    String apiKey = System.getenv('TRAFIKLAB_API_KEY')
 
 
     @Cacheable(value="journeyResponse")
