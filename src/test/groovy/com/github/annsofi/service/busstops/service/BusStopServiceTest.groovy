@@ -57,7 +57,7 @@ class BusStopServiceTest extends Specification {
         def busLineWithMaxStops = cut.getBusLineWithMaxStops(1)
 
         then: "the line with three stops is returned"
-        busLineWithMaxStops.get(0).lineNumber == '636'
+        busLineWithMaxStops.getBusLines().get(0).lineNumber == '636'
     }
 
     def "Should translate bus stop correctly"() {
