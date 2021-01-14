@@ -19,8 +19,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@Api(Constant.TOP_STOPS)
-@RequestMapping(value = Constant.TOP_STOPS)
+@Api(Constant.BUS_LINES_MOST_STOPS)
+@RequestMapping(value = Constant.BUS_LINES_MOST_STOPS)
 class BusStopController {
 
     @Autowired

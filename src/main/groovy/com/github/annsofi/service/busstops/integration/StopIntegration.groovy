@@ -1,9 +1,6 @@
 package com.github.annsofi.service.busstops.integration
 
-
 import com.github.annsofi.service.busstops.integration.stop.StopResponse
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
@@ -21,8 +18,6 @@ class StopIntegration {
 
     @Value('${se.sl.api.apiKey}')
     String apiKey
-
-    final Logger log = LoggerFactory.getLogger(StopIntegration.class)
 
     @Cacheable(value="stopResponse")
     StopResponse get() {

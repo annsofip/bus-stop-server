@@ -1,9 +1,6 @@
 package com.github.annsofi.service.busstops.integration
 
-
 import com.github.annsofi.service.busstops.integration.journeypatternpointonline.JourneyResponse
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
@@ -23,7 +20,6 @@ class JourneyIntegration {
     @Value('${se.sl.api.apiKey}')
     String apiKey
 
-    final Logger log = LoggerFactory.getLogger(JourneyIntegration.class)
 
     @Cacheable(value="journeyResponse")
     JourneyResponse get() {

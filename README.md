@@ -19,7 +19,7 @@ Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 Swagger doc can be found here
 http://localhost:8080/swagger-ui.html
 
-##Available endpoints:
+## Available endpoints:
 ### /api/topstops
 Gets the buslines with the most stops on the line. 
 http://localhost:8080/topstops
